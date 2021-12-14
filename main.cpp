@@ -3,8 +3,8 @@
 
 std::vector<int> sort(std::vector<int> vec)
 {
-if (vec.size() < 2) return vec;
-if (vec.size() < 3)
+if (vec.size() < 2) return vec; // Условие выхода из рекурсии если в векторе 1 элемент
+if (vec.size() < 3) // Условие выхода если 2 элемента которые меняются местами в зависимости от старшенства
 {
     if (*vec.begin()>*(vec.end()-1))
     {
@@ -13,29 +13,29 @@ if (vec.size() < 3)
     return vec;
 }
 
-auto begin = vec.begin();
-auto end = vec.end();
+/*auto begin = vec.begin(); Это пока не пригодилось, но пусть пока будет)
+auto end = vec.end();*/
 
 int pivot;
-pivot= vec[(vec.size())/2-1];
-std::vector<int> left;
-std::vector<int> right;
+pivot= vec[(vec.size())/2-1]; // В качестве опорного элемента решил брать центральный элемент
+std::vector<int> left; // Вектор для чисел меньше опорного элемента
+std::vector<int> right; // И для чисел больше него
 
-    for (int i : vec) {
-        if (i < pivot)
+    for (int i : vec) { // Пробегаемся по вектору
+        if (i < pivot) // Всё что меньше пивота - налево
             left.push_back(i);
-        if (i >= pivot)
+        if (i >= pivot) // Всё что больше направо
             right.push_back(i);
     }
-    left = sort(left);
-    right = sort(right);
-    left.insert(left.end(), right.begin(),right.end());
-    return left;
+    left = sort(left); // Рекурсия для меньших чисел
+    right = sort(right); // Рекурсия для больших
+    left.insert(left.end(), right.begin(),right.end()); //Соединяем получившиеся вектора - в конец меньшего дописываем больший
+    return left; // Возвращаем то что получилось
 
 
 }
 
-void Qsort(std::vector<int> & v)
+void Qsort(std::vector<int> & v) // Это функция - буфер, она для того чтобы при выполнении сортировки ничего не нужно было куда-то возвращать вектор
 {
     v = sort(v);
 }
